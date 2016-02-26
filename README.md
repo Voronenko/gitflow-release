@@ -6,6 +6,10 @@ Perhaps most of developers are familiar with git-flow model, that makes release 
 
 If you never heard about git-flow previously, I suggest to study classic post [http://nvie.com/posts/a-successful-git-branching-model/](http://nvie.com/posts/a-successful-git-branching-model/) && how Atlassian interpret the same idea [https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow)
 
+For those, who aware, let me remind well known diagram:
+
+![](https://raw.githubusercontent.com/Voronenko/gitflow-release/master/images/git-workflow-release-cycle-4maintenance.png)
+
 ## Implementation - tools
 
 Usually I introduce approach with set of file-helpers that migrate & evolve with each next project. I support idea, that code infrastructure should be stored alongside the project code. Thus usually I have deployment folder where devops scenarios live (usually I use Ansible tool, althouth had experience with CHEF deployments too), and suppose that developers provide me with build logic that outputs target artifact files under buiild/ folder. As a result, typical devops magic structure looks like:
@@ -35,7 +39,7 @@ Simple text file, containing current project version. I like idea with git tags 
 
 In most of scenarios of continious integration, subsequent releases change only minor version. Thanks to handy bash script credited in source we have possibility to get value of the next minor version
 
-<pre>➜  releasing  ./bump-version-drynext.sh 
+<pre>➜  releasing  ./bump-version-drynext.sh
 0.0.2</pre>
 
 Logic is simple enough - we read current version from version.txt & apply shell magic to get next value.
@@ -231,9 +235,15 @@ git push origin develop && git push origin master --tags</pre>
 
 All popular build servers support branches detecting and building. For example, Atlassian Bamboo has this easily configurable via UI , while, for example, for Jenkins you will need to play more.
 
+![](https://raw.githubusercontent.com/Voronenko/gitflow-release/master/images/bamboo_release_branch.png)
+
 Process on a build server could be implemented in a way, that allows to initiate release from the develop branch using optional build step:
 
+![](https://raw.githubusercontent.com/Voronenko/gitflow-release/master/images/bamboo_release_start.png)
+
 And introduce possiblility to finalize release as a optional step on a release branch:
+
+![](https://raw.githubusercontent.com/Voronenko/gitflow-release/master/images/bamboo_release_finish.png)
 
 If you try to use recipes without adjustments, you will get into trouble, as almost any build server for speed and size advantages does not checkout complete repository  history, thus steps will fail.
 
@@ -343,4 +353,4 @@ git push central develop && git push central master --tags</pre>
 
 ## Points of Interest
 
-Potentially, you can reuse approach to your own projects with minimal adaptation. If you would use that approach with different build server, I would be grateful if you share your experience
+Potentially, you can reuse approach to your own projects with minimal adaptation. If you would use that approach with different build server, I would be grateful if you share your experience. If you need to implement continious integration on your project - you are welcome.
