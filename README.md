@@ -372,3 +372,5 @@ git push central develop && git push central master --tags
 ## Points of Interest
 
 Potentially, you can reuse approach to your own projects with minimal adaptation. If you would use that approach with different build server, I would be grateful if you share your experience. If you need to implement continious integration on your project - you are welcome.
+
+Mentioned samples could be seen or forked from  [https://github.com/Voronenko/gitflow-release](https://github.com/Voronenko/gitflow-release)
