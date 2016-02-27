@@ -33,7 +33,9 @@ Let's take a look on files contents & purpose.
 
 Simple text file, containing current project version. I like idea with git tags in git-flow, but really would prefer to have the possibility to control versioning on my own.  Typical version example is x.y.z:
 
-<pre>0.0.1</pre>
+<pre>
+0.0.1
+</pre>
 
 #### bump-version-drynext.sh
 
@@ -64,9 +66,12 @@ increment_version ()
   echo -e "${new// /.}"
 }
 
+
 VERSION=`cat version.txt`
 
-increment_version $VERSION</pre>
+increment_version $VERSION
+
+</pre>
 
 #### bump-version.sh
 
@@ -87,7 +92,9 @@ echo $VERSION > version.txt
 # Example for nodejs package.json:
 
 #sed -i.bak "s/[[:space:]]*\"version\"[[:space:]]*:[[:space:]]*\".*\",/  \"version\":\"$VERSION\",/g" $CURRENT_DIR/package.json
-#rm $CURRENT_DIR/package.json.bak || true</pre>
+#rm $CURRENT_DIR/package.json.bak || true
+
+</pre>
 
 #### package.sh
 
@@ -125,7 +132,9 @@ echo "git_hash=$GITCOMMIT" >> build/version.txt
 echo "built=$DATE" >> build/version.txt
 
 echo PRODUCING ARTIFACT $PROJECT-$VERSION$SUFFIX.tgz  in build/
-tar cfz  $PROJECT-$VERSION$SUFFIX.tgz build</pre>
+tar cfz  $PROJECT-$VERSION$SUFFIX.tgz build
+
+</pre>
 
 #### Unpackage.sh
 
@@ -139,7 +148,9 @@ rm -rf ./build || true
 current_artefact=$(find ./${PROJECT}*.tgz -type f -exec stat -c "%n" {} + | sort -r | head -n1)
 echo Working with artefact: $current_artefact
 tar xvzf $current_artefact
-echo artefact unpacked: $current_artefact</pre>
+echo artefact unpacked: $current_artefact
+
+</pre>
 
 #### deployment/release_start.sh
 
@@ -179,7 +190,9 @@ git checkout develop
 NEXTVERSION=`./bump-version-drynext.sh`
 ./bump-version.sh $NEXTVERSION
 git commit -am "Bumps version to $NEXTVERSION"
-git push origin develop</pre>
+git push origin develop
+
+</pre>
 
 #### deployment/release_finish.sh
 
@@ -229,7 +242,9 @@ git checkout -
 
 git flow release finish -m "release $RELEASETAG" $RELEASETAG
 
-git push origin develop && git push origin master --tags</pre>
+git push origin develop && git push origin master --tags
+
+</pre>
 
 ## Linking to build server
 
@@ -295,6 +310,7 @@ NEXTVERSION=`./bump-version-drynext.sh`
 ./bump-version.sh $NEXTVERSION
 git commit -am "Bumps version to $NEXTVERSION"
 git push central develop
+
 </pre>
 
 #### deployment/release_finish_bamboo.sh
@@ -349,7 +365,9 @@ git checkout -
 
 git flow release finish -m "release $RELEASETAG" $RELEASETAG
 
-git push central develop && git push central master --tags</pre>
+git push central develop && git push central master --tags
+
+</pre>
 
 ## Points of Interest
 
