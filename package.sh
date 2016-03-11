@@ -14,7 +14,7 @@ mkdir -p ./build || true
 
 VERSION=`cat version.txt`
 GITCOMMIT=`git rev-parse --short HEAD`
-GITTAG:`git describe --exact-match --tags $(git log -n1 --pretty='%h') 2>/dev/null`
+GITTAG=`git describe --exact-match --tags $(git log -n1 --pretty='%h') 2>/dev/null`
 DATE=`date +%Y-%m-%d:%H:%M:%S`
 
 
