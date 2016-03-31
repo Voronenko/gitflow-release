@@ -10,7 +10,7 @@ export GIT_MERGE_AUTOEDIT
 
 GITBRANCHFULL=`git rev-parse --abbrev-ref HEAD`
 GITBRANCH=`echo "$GITBRANCHFULL" | cut -d "/" -f 1`
-RELEASETAG=`echo "$GITBRANCHFULL" | cut -d "/" -f 2`
+HOTFIXTAG=`echo "$GITBRANCHFULL" | cut -d "/" -f 2`
 GIT_REMOTE=git@github.com:Voronenko/bamboo-release.git
 
 echo $GITBRANCH
@@ -41,10 +41,6 @@ git checkout -
 git checkout master
 git pull central master
 git checkout -
-
-# UNCOMMENT THESE TWO LINES IF YOU BUMP VERSION AT THE END
-#./bump-version.sh $RELEASETAG
-#git commit -am "Bumps version to $RELEASETAG"
 
 git flow hotfix finish -m "hotfix $HOTFIXTAG" $HOTFIXTAG
 
