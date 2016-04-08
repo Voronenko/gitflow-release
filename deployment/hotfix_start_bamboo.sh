@@ -32,5 +32,9 @@ git checkout develop
 
 git flow hotfix start $VERSION
 
+NEXTVERSION=`./bump-minorversion-drynext.sh`
+./bump-version.sh $NEXTVERSION
+git commit -am "Bumps version to $NEXTVERSION"
+
 # bump hotfixed version to server
 git push central hotfix/$VERSION
