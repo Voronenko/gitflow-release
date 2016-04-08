@@ -1,6 +1,7 @@
 #!/bin/sh
 
 cd ${PWD}/../
+
 VERSION=$1
 if [ -z $1 ]
 then
@@ -8,16 +9,25 @@ then
   exit 1
 fi
 
+# PREVENT INTERACTIVE MERGE MESSAGE PROMPT
+GIT_MERGE_AUTOEDIT=no
+export GIT_MERGE_AUTOEDIT
+GIT_REMOTE=git@github.com:Voronenko/bamboo-release.git
+
+
+# add remote due to bamboo git cache shit
+git remote add central "$GIT_REMOTE"
+
 #Initialize gitflow
 git flow init -f -d
 
 # ensure you are on latest develop  & master
 git checkout develop
-git pull origin develop
+git pull central develop
 git checkout -
 
 git checkout master
-git pull origin master
+git pull central master
 git checkout develop
 
 git flow hotfix start $VERSION
@@ -26,7 +36,5 @@ NEXTVERSION=`./bump-minorversion-drynext.sh`
 ./bump-version.sh $NEXTVERSION
 git commit -am "Bumps version to $NEXTVERSION"
 
-
-# bump hotfix version to server
-git push
-
+# bump hotfixed version to server
+git push central hotfix/$VERSION
