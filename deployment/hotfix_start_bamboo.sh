@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd ${PWD}/../
+cd $(git rev-parse --show-cdup)
 
 VERSION=$1
 if [ -z $1 ]
@@ -13,7 +13,6 @@ fi
 GIT_MERGE_AUTOEDIT=no
 export GIT_MERGE_AUTOEDIT
 GIT_REMOTE=git@github.com:Voronenko/bamboo-release.git
-
 
 # add remote due to bamboo git cache shit
 git remote add central "$GIT_REMOTE"

@@ -1,6 +1,7 @@
 #!/bin/sh
 
-cd ${PWD}/../
+cd $(git rev-parse --show-cdup)
+
 VERSION=$1
 if [ -z $1 ]
 then

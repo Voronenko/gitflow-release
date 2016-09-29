@@ -5,6 +5,8 @@ set -e
 CURRENT_DIR=`pwd`
 VERSION=$1
 
+cd $(git rev-parse --show-cdup)
+
 echo $VERSION > version.txt
 
 #Optionally - Update your app version in app files, like package.json, bower.json , etc

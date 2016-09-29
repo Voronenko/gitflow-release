@@ -2,7 +2,7 @@
 
 set -e
 
-cd ${PWD}/../
+cd $(git rev-parse --show-cdup)
 
 FILES_IN_CONFLICT=`git diff --name-only --diff-filter=U | wc -l`
 echo "Conflicted files: $FILES_IN_CONFLICT"

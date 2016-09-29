@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd ${PWD}/../
+cd $(git rev-parse --show-cdup)
 
 # PREVENT INTERACTIVE MERGE MESSAGE PROMPT AT A FINAL STEP
 GIT_MERGE_AUTOEDIT=no
@@ -23,7 +23,6 @@ then
   echo We expect gitflow to be followed, make sure hotfix branch called hotfix/x.x.x.x
   exit 1
 fi
-
 
 #Initialize gitflow
 git flow init -f -d

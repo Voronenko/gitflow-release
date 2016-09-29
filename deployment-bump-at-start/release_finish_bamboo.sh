@@ -4,7 +4,7 @@
 
 set -e
 
-cd ${PWD}/../
+cd $(git rev-parse --show-cdup)
 
 # PREVENT INTERACTIVE MERGE MESSAGE PROMPT AT A FINAL STEP
 GIT_MERGE_AUTOEDIT=no
