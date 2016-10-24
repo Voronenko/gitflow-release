@@ -46,7 +46,8 @@ In most of scenarios of continious integration, subsequent releases change only 
 
 Logic is simple enough - we read current version from version.txt & apply shell magic to get next value.
 
-<pre lang="c++">#!/bin/bash
+```shell-script
+#!/bin/bash
 
 # credits: http://stackoverflow.com/questions/8653126/how-to-increment-version-number-in-a-shell-script
 
@@ -71,7 +72,7 @@ VERSION=`cat version.txt`
 
 increment_version $VERSION
 
-</pre>
+```
 
 #### bump-version.sh
 
@@ -79,7 +80,8 @@ Very important file. Usually I prefer that app version in my project files (like
 
 What the code does - it applies version parameter to files, and writes new one into version.txt
 
-<pre>#!/bin/bash
+```shell-script
+#!/bin/bash
 
 set -e
 
@@ -94,7 +96,7 @@ echo $VERSION > version.txt
 #sed -i.bak "s/[[:space:]]*\"version\"[[:space:]]*:[[:space:]]*\".*\",/  \"version\":\"$VERSION\",/g" $CURRENT_DIR/package.json
 #rm $CURRENT_DIR/package.json.bak || true
 
-</pre>
+```
 
 #### package.sh
 
@@ -142,7 +144,8 @@ This file is usually executed on a next step in build process, when artifact was
 
 In a result, you will get unpacked artifact in build folder.
 
-<pre>#!/bin/sh
+```shell-script
+#!/bin/sh
 PROJECT=project-name
 rm -rf ./build || true
 current_artefact=$(find ./${PROJECT}*.tgz -type f -exec stat -c "%n" {} + | sort | head -n1)
@@ -150,14 +153,15 @@ echo Working with artefact: $current_artefact
 tar xvzf $current_artefact
 echo artefact unpacked: $current_artefact
 
-</pre>
+```
 
 #### deployment/release_start.sh
 
 What it does - it creates the release, and pushes release branch to server, so the continious integration tool can pick it up and build. I have to say that some portion of holy war is present here: when to bump version. I had two types of the customers: customer - BEGIN insist, that version.txt contains version he is going to release, thus once I start release process, I should immediate bump version up in the develop, as all new features there will belong to the next release. From other hand, customer-END usually does not care on version.txt, and per his understanding, bumping the version is the final step in the release - i.e. after that push everything that was commited previously was 0.0.1 ongoing development and now we have released 0.0.2\.  I would prefer to bump version at the end. As you see both approaches are supported with litle commenting.
 
-<pre>This batch implements release start by either providing new release version as a parameter, or getting the one from version.txt
+This batch implements release start by either providing new release version as a parameter, or getting the one from version.txt
 
+```shell-script
 #!/bin/sh
 
 cd ${PWD}/../
@@ -192,13 +196,14 @@ NEXTVERSION=`./bump-version-drynext.sh`
 git commit -am "Bumps version to $NEXTVERSION"
 git push origin develop
 
-</pre>
+```
 
 #### deployment/release_finish.sh
 
 Fortunately, this step does not require any external parameters. Current release version is detected from the branch name (release/0.0.2) and rest of the steps are clear. Again here, if you follow the classic bump-the-version approach - you would need to uncomment "./bump-version.sh $RELEASETAG"
 
-<pre>#!/bin/sh
+```shell-script
+#!/bin/sh
 
 cd ${PWD}/../
 
@@ -244,7 +249,7 @@ git flow release finish -m "release $RELEASETAG" $RELEASETAG
 
 git push origin develop && git push origin master --tags
 
-</pre>
+```
 
 ## Linking to build server
 
@@ -268,7 +273,8 @@ For bamboo, following "hack" might be introduced: we are manually setting the ne
 
 Please find below slightly modified release_start for bamboo:
 
-<pre>#!/bin/sh
+```shell-script
+#!/bin/sh
 
 cd ${PWD}/../
 
@@ -311,11 +317,12 @@ NEXTVERSION=`./bump-version-drynext.sh`
 git commit -am "Bumps version to $NEXTVERSION"
 git push central develop
 
-</pre>
+```
 
 #### deployment/release_finish_bamboo.sh
 
-<pre>#!/bin/sh
+```shell-script
+#!/bin/sh
 
 # IMPORTANT - THIS FILE IS INTENDED TO BE EXECUTED ONLY IN BAMBOO ENVIRONMENT
 
@@ -367,7 +374,7 @@ git flow release finish -m "release $RELEASETAG" $RELEASETAG
 
 git push central develop && git push central master --tags
 
-</pre>
+```
 
 ## Points of Interest
 
