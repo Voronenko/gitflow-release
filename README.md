@@ -106,7 +106,8 @@ In addition, such files can be easily read by build servers like bamboo or jenki
 
 Resulting files are placed in build/ and packed.
 
-<pre>#!/bin/sh
+```shell-script
+#!/bin/sh
 if [ -z "$1" ]
 then
   SUFFIX=""
@@ -133,8 +134,7 @@ echo "built=$DATE" >> build/version.txt
 
 echo PRODUCING ARTIFACT $PROJECT-$VERSION$SUFFIX.tgz  in build/
 tar cfz  $PROJECT-$VERSION$SUFFIX.tgz build
-
-</pre>
+```
 
 #### Unpackage.sh
 
