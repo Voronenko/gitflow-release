@@ -2,7 +2,7 @@
 
 set -e
 
-cd $(git rev-parse --show-cdup)
+if [ ! -d "./.git" ];then cd $(git rev-parse --show-cdup); fi;
 
 VERSION=$1
 if [ -z $1 ]
@@ -41,4 +41,3 @@ NEXTVERSION=`./bump-version-drynext.sh`
 ./bump-version.sh $NEXTVERSION
 git commit -am "Bumps version to $NEXTVERSION"
 git push central develop
-

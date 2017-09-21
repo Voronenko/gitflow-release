@@ -2,7 +2,7 @@
 
 set -e
 
-cd $(git rev-parse --show-cdup)
+if [ ! -d "./.git" ];then cd $(git rev-parse --show-cdup); fi;
 
 FILES_IN_CONFLICT=`git diff --name-only --diff-filter=U | wc -l`
 echo "Conflicted files: $FILES_IN_CONFLICT"
@@ -21,7 +21,7 @@ if [ "$FILES_IN_CONFLICT" = "2" ] ; then
   fi
 
   PACKAGE_JSON_IN_CONFLICT=`git diff --name-only --diff-filter=U | grep package.json`
-  if [ "$PACKAGE_JSON_IN_CONFLICT" = "package.json" ] ; then 
+  if [ "$PACKAGE_JSON_IN_CONFLICT" = "package.json" ] ; then
    git checkout --ours package.json
    git add package.json
   fi
@@ -44,8 +44,3 @@ fi
 
 
 git push central develop && git push central master --tags
-
-
-
-
-

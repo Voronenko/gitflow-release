@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd $(git rev-parse --show-cdup)
+if [ ! -d "./.git" ];then cd $(git rev-parse --show-cdup); fi;
 
 # PREVENT INTERACTIVE MERGE MESSAGE PROMPT AT A FINAL STEP
 GIT_MERGE_AUTOEDIT=no

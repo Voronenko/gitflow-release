@@ -5,7 +5,7 @@ set -e
 CURRENT_DIR=`pwd`
 VERSION=$1
 
-cd $(git rev-parse --show-cdup)
+if [ ! -d "./.git" ];then cd $(git rev-parse --show-cdup); fi;
 
 echo $VERSION > version.txt
 
@@ -14,4 +14,3 @@ echo $VERSION > version.txt
 
 #sed -i.bak "s/[[:space:]]*\"version\"[[:space:]]*:[[:space:]]*\".*\",/  \"version\":\"$VERSION\",/g" $CURRENT_DIR/package.json
 #rm $CURRENT_DIR/package.json.bak || true
-

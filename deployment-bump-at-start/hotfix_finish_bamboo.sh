@@ -4,7 +4,7 @@ set -e
 
 # IMPORTANT - THIS FILE IS INTENDED TO BE EXECUTED ONLY IN BAMBOO ENVIRONMENT
 
-cd $(git rev-parse --show-cdup)
+if [ ! -d "./.git" ];then cd $(git rev-parse --show-cdup); fi;
 
 # PREVENT INTERACTIVE MERGE MESSAGE PROMPT AT A FINAL STEP
 GIT_MERGE_AUTOEDIT=no
@@ -68,7 +68,7 @@ if [ "$FILES_IN_CONFLICT" = "2" ] ; then
   fi
 
   PACKAGE_JSON_IN_CONFLICT=`git diff --name-only --diff-filter=U | grep package.json`
-  if [ "$PACKAGE_JSON_IN_CONFLICT" = "package.json" ] ; then 
+  if [ "$PACKAGE_JSON_IN_CONFLICT" = "package.json" ] ; then
    git checkout --ours package.json
    git add package.json
   fi

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd $(git rev-parse --show-cdup)
+if [ ! -d "./.git" ];then cd $(git rev-parse --show-cdup); fi;
 VERSION=$1
 if [ -z $1 ]
 then
@@ -31,4 +31,3 @@ NEXTVERSION=`./bump-version-drynext.sh`
 ./bump-version.sh $NEXTVERSION
 git commit -am "Bumps version to $NEXTVERSION"
 git push origin develop
-
